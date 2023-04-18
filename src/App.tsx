@@ -1,11 +1,27 @@
 import {Orders} from "./Components/Orders/Orders";
 import {useEffect, useState} from "react";
+import {Slider} from "./Components/Slider/Slider";
 
 export type OrderType = {
     id: number
     key: string
     is_ready: boolean
 }
+
+const slides = [
+    {
+        img_url:'https://images.unsplash.com/photo-1681238337874-c65010a35603?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1099&q=80',
+        caption:'Image 1'
+    },
+    {
+        img_url:'https://images.unsplash.com/photo-1681616679951-31dd84d5b6f0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80',
+        caption:'Image 2'
+    },
+    {
+        img_url:'https://images.unsplash.com/photo-1681238339230-ad333583139e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1097&q=80',
+        caption:'Image 3'
+    },
+]
 
 function App() {
     const [orders, setOrders] = useState<OrderType[]>([])
@@ -39,6 +55,7 @@ function App() {
                     title={'Готовы'}
                     status={'ready'}
                     isLoading={loading}/>
+            <Slider slides={slides}/>
         </div>
     )
 }
