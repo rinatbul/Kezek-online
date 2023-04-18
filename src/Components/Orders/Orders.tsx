@@ -1,5 +1,8 @@
 import s from "./Orders.module.css";
 import {OrderType} from "../../App";
+import Lottie from "lottie-react";
+import loading from '../../Lotties/loading.json'
+import notFound from '../../Lotties/not-found.json'
 
 type OrdersPropsType = {
     title: string
@@ -28,17 +31,20 @@ export const Orders = (props: OrdersPropsType) => {
                         style={{borderColor: `${OrdersStyles[props.status].borderColor}`}}>{order.key}</button>
             </div>
         })
-    ) : (<div>Not found</div>)
+    ) : (<Lottie animationData={notFound} loop={false}/>)
+
     return (
         <div className={s.wrapper}>
             <div className={s.header}
                  style={{backgroundColor: `${OrdersStyles[props.status].backgroundColor}`}}>
                 {props.title}
             </div>
-            {
-                props.isLoading ? <div>Loading...</div> : orders
-            }
-
+            <div className={props.isLoading || !props.orders.length ? s.flex: s.grid}
+                 style={{borderColor: `${OrdersStyles[props.status].borderColor}`}}>
+                {
+                    props.isLoading ? <Lottie animationData={loading} loop={true} /> : orders
+                }
+            </div>
         </div>
     )
 }

@@ -34,8 +34,34 @@
     width: 0;
 }
 
+
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /*gap: 1rem;*/
+    border: 2px solid #c25100;
+    border-radius: 0 0 1rem 1rem;
+    overflow: auto;
+    height: 20rem;
+}
+.grid::-webkit-scrollbar {
+    width: 0;
+}
+.flex{
+    height: 20rem;
+    display: flex;
+    overflow: auto;
+    border: 2px solid #c25100;
+    border-radius: 0 0 1rem 1rem;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+.flex::-webkit-scrollbar {
+    width: 0;
+}
+
 .item {
-    /*border: 1px solid #ccc;*/
     padding: 1rem;
     display: flex;
     justify-content: center;
