@@ -75,4 +75,5 @@
     border: 2px #c25100 solid;
     border-radius: 1rem;
     box-shadow: 2px 2px 2px grey;
+    cursor: pointer;
 }
