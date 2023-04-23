@@ -5,6 +5,9 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {RestaurantsPage} from "./Pages/RestaurantsPage/RestaurantsPage";
 import {Restaurant} from "./Pages/Restaurant/Restaurant";
 import {AdminPage} from "./Pages/AdminPage/AdminPage";
+import {Provider} from "react-redux";
+import {createStore} from 'redux'
+import {rootReducer} from "./Redux/rootReducer";
 
 const router = createBrowserRouter([
     {
@@ -27,8 +30,11 @@ const router = createBrowserRouter([
     },
 ]);
 
+export type RootState = ReturnType<typeof rootReducer>;
+const store = createStore(rootReducer);
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  <Provider store={store}>
       <RouterProvider router={router} />
-  </React.StrictMode>,
+  </Provider>,
 )

@@ -61,7 +61,6 @@ export const Restaurant = () => {
             .then(res => res.json())
             .then((data: any) => {
             })
-        console.log(id)
     }
 
     return (
