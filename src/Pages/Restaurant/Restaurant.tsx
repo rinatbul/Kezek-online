@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {Orders} from "../../Components/Orders/Orders";
 import {Slider} from "../../Components/Slider/Slider";
 import {useNavigate, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../main";
 
 export type OrderType = {
     id: number
@@ -26,9 +28,11 @@ const slides = [
 ]
 
 export const Restaurant = () => {
+    const dispatch = useDispatch();
+    const orders = useSelector((state:RootState)=>state.orders)
+
     const params = useParams()
     const navigate = useNavigate()
-    const [orders, setOrders] = useState<OrderType[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
@@ -36,9 +40,12 @@ export const Restaurant = () => {
         const intervalId = setInterval(() => {
             fetch(`https://online-kezek-test-production-5624.up.railway.app/api/restaurants/${params.id}/orders/`)
                 .then(response => response.json())
-                .then(data => {
-                    setOrders(data.orders)
-                    setLoading(false)
+                .then(data =>{
+                    console.log('Orders >>> ',data.orders)
+                    console.log('is Ready orders >> ', data.orders.map((o:any)=>o.is_ready))
+                    dispatch({type:'GET-ORDERS',payload:data.orders})
+                    dispatch({type:'IS-LOADING',payload:false})
+                    // setLoading(false)
                 })
         }, 3000)
 

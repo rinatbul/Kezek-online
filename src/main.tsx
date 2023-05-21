@@ -6,8 +6,9 @@ import {RestaurantsPage} from "./Pages/RestaurantsPage/RestaurantsPage";
 import {Restaurant} from "./Pages/Restaurant/Restaurant";
 import {AdminPage} from "./Pages/AdminPage/AdminPage";
 import {Provider} from "react-redux";
-import {createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux';
 import {rootReducer} from "./Redux/rootReducer";
+import thunk from "redux-thunk";
 
 const router = createBrowserRouter([
     {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
 ]);
 
 export type RootState = ReturnType<typeof rootReducer>;
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
