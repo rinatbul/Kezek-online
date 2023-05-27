@@ -5,6 +5,7 @@ import {Slider} from "../../Components/Slider/Slider";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../main";
+import {fetchOrders} from "../../Redux/restaurantReducer";
 
 export type OrderType = {
     id: number
@@ -28,25 +29,18 @@ const slides = [
 ]
 
 export const Restaurant = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const orders = useSelector((state:RootState)=>state.orders)
+    const isLoading = useSelector((state:RootState)=>state.restaurants.isLoading)
 
     const params = useParams()
     const navigate = useNavigate()
-    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
-        setLoading(true)
         const intervalId = setInterval(() => {
-            fetch(`https://online-kezek-test-production-5624.up.railway.app/api/restaurants/${params.id}/orders/`)
-                .then(response => response.json())
-                .then(data =>{
-                    console.log('Orders >>> ',data.orders)
-                    console.log('is Ready orders >> ', data.orders.map((o:any)=>o.is_ready))
-                    dispatch({type:'GET-ORDERS',payload:data.orders})
-                    dispatch({type:'IS-LOADING',payload:false})
-                    // setLoading(false)
-                })
+            if (params.id) {
+                dispatch(fetchOrders(params.id))
+            }
         }, 3000)
 
         return () => {
@@ -54,8 +48,8 @@ export const Restaurant = () => {
         }
     }, [])
 
-    const completeOrders = orders.filter(order => order.is_ready)
-    const inProgressOrders = orders.filter(order => !order.is_ready)
+    const completeOrders = orders.orders.filter(order => order.is_ready)
+    const inProgressOrders = orders.orders.filter(order => !order.is_ready)
 
     const onItemClick = (id: number, is_ready:boolean) => {
         fetch(`https://online-kezek-test-production-5624.up.railway.app/api/orders/${id}`, {
@@ -79,12 +73,12 @@ export const Restaurant = () => {
             <Orders orders={inProgressOrders}
                     title={'Готовятся'}
                     status={'notReady'}
-                    isLoading={loading}
+                    isLoading={isLoading}
                     onClick={onItemClick}/>
             <Orders orders={completeOrders}
                     title={'Готовы'}
                     status={'ready'}
-                    isLoading={loading}
+                    isLoading={isLoading}
                     onClick={onItemClick}/>
             <Slider slides={slides}/>
         </div>

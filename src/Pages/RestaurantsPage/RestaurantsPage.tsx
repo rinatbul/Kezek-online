@@ -14,17 +14,8 @@ export type RestaurantType = {
 
 export const RestaurantsPage = () => {
     const dispatch = useDispatch<any>()
-    const restaurants = useSelector((state:RootState) => state.restaurants);
+    const restaurants = useSelector((state:RootState) => state.restaurants.restaurants);
     const navigate = useNavigate()
-
-    // useEffect(() => {
-    //     fetch('https://online-kezek-test-production-5624.up.railway.app/api/restaurants/')
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log('restaurants ', data)
-    //             dispatch({type:'GET-RESTAURANTS', payload:data})
-    //         })
-    // }, [])
 
     useEffect(() => {
         dispatch(fetchRestaurants())

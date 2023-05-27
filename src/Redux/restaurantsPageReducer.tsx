@@ -9,13 +9,20 @@ export type SetRestaurantsAction= {
 }
 
 
-
-export const restaurantsPageReducer = (state:RestaurantType[] = [],
-                                       action:SetRestaurantsAction):RestaurantType[] => {
+type RestaurantsPageReducerInitStateType = {
+    restaurants:  RestaurantType[];
+    isLoading: boolean;
+}
+const restaurantsPageReducerInitState: RestaurantsPageReducerInitStateType = {
+    restaurants:  [],
+    isLoading: false
+}
+export const restaurantsPageReducer = (state: RestaurantsPageReducerInitStateType = restaurantsPageReducerInitState,
+                                       action:SetRestaurantsAction):RestaurantsPageReducerInitStateType => {
     console.log('restPageReducer ',action)
     switch (action.type){
         case 'GET-RESTAURANTS':
-            return action.payload;
+            return {...state, restaurants: action.payload}
         default:
             return state;
     }
